@@ -1,0 +1,26 @@
+{
+    "logs": [
+        {
+            "outputFile": "/Users/weixin/AndroidStudioProjects/BLEDemo/BLEDemo/build/intermediates/incremental/mergeDebugResources/merged.dir/values-zh/values-zh.xml",
+            "map": [
+                {
+                    "source": "/Users/weixin/AndroidStudioProjects/BLEDemo/BLEDemo/src/main/res/values-zh/strings.xml",
+                    "from": {
+                        "startLines": "4,2,14,12,10,11,7,8,3,13,9,5,6",
+                        "startColumns": "4,4,4,4,4,4,4,4,4,4,4,4,4",
+                        "startOffsets": "158,57,554,480,400,442,280,320,104,519,363,206,243",
+                        "endColumns": "46,45,71,37,40,36,38,41,52,33,35,35,35",
+                        "endOffsets": "200,98,621,513,436,474,314,357,152,548,394,237,274"
+                    },
+                    "to": {
+                        "startLines": "2,3,4,5,6,7,8,9,10,11,12,13,14",
+                        "startColumns": "4,4,4,4,4,4,4,4,4,4,4,4,4",
+                        "startOffsets": "55,102,148,220,258,299,336,375,417,470,504,540,576",
+                        "endColumns": "46,45,71,37,40,36,38,41,52,33,35,35,35",
+                        "endOffsets": "97,143,215,253,294,331,370,412,465,499,535,571,607"
+                    }
+                }
+            ]
+        }
+    ]
+}

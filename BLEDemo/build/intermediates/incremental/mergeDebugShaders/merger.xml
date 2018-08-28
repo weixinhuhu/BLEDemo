@@ -1,0 +1,2 @@
+<?xml version="1.0" encoding="utf-8"?>
+<merger version="3"><dataSet config="main"><source path="/Users/weixin/AndroidStudioProjects/BLEDemo/BLEDemo/src/main/shaders"/></dataSet><dataSet config="debug"><source path="/Users/weixin/AndroidStudioProjects/BLEDemo/BLEDemo/src/debug/shaders"/></dataSet></merger>

@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">RT8 Demo</string>
+    <string name="hello_world">Hello world!</string>
+    <string name="action_settings">设置</string>
+    <string name="scan">扫描</string>
+    <string name="stop">停止</string>
+    <string name="connect">连接</string>
+    <string name="disconnect">断开</string>
+    <string name="pair">认证</string>
+    <string name="card_id">卡 ID</string>
+    <string name="clear">清除</string>
+    <string name="cancel">取消</string>
+    <string name="ok">确定</string>
+    <string name="bthdisabled">蓝牙未打开或者应用没有指定  bluetooth_le 特征!</string>
+    
+</resources>

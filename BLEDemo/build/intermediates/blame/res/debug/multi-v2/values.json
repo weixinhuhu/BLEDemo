@@ -1,0 +1,62 @@
+{
+    "logs": [
+        {
+            "outputFile": "/Users/weixin/AndroidStudioProjects/BLEDemo/BLEDemo/build/intermediates/incremental/mergeDebugResources/merged.dir/values/values.xml",
+            "map": [
+                {
+                    "source": "/Users/weixin/AndroidStudioProjects/BLEDemo/BLEDemo/src/main/res/values/strings.xml",
+                    "from": {
+                        "startLines": "5,3,15,13,11,12,8,9,4,14,10,6,7",
+                        "startColumns": "4,4,4,4,4,4,4,4,4,4,4,4,4",
+                        "startOffsets": "221,118,652,574,488,533,353,398,167,617,449,275,314",
+                        "endColumns": "52,47,105,41,43,39,43,49,52,33,37,37,37",
+                        "endOffsets": "269,161,753,611,527,568,392,443,215,646,482,308,347"
+                    },
+                    "to": {
+                        "startLines": "4,5,6,7,8,9,10,11,12,13,14,15,16",
+                        "startColumns": "4,4,4,4,4,4,4,4,4,4,4,4,4",
+                        "startOffsets": "169,222,270,376,418,462,502,546,596,649,683,721,759",
+                        "endColumns": "52,47,105,41,43,39,43,49,52,33,37,37,37",
+                        "endOffsets": "217,265,371,413,457,497,541,591,644,678,716,754,792"
+                    }
+                },
+                {
+                    "source": "/Users/weixin/AndroidStudioProjects/BLEDemo/BLEDemo/src/main/res/values/dimens.xml",
+                    "from": {
+                        "startLines": "3,4",
+                        "startColumns": "4,4",
+                        "startOffsets": "92,151",
+                        "endColumns": "57,55",
+                        "endOffsets": "145,202"
+                    },
+                    "to": {
+                        "startLines": "2,3",
+                        "startColumns": "4,4",
+                        "startOffsets": "55,113",
+                        "endColumns": "57,55",
+                        "endOffsets": "108,164"
+                    }
+                },
+                {
+                    "source": "/Users/weixin/AndroidStudioProjects/BLEDemo/BLEDemo/src/main/res/values/styles.xml",
+                    "from": {
+                        "startLines": "6,15",
+                        "startColumns": "4,4",
+                        "startOffsets": "191,522",
+                        "endLines": "12,17",
+                        "endColumns": "12,12",
+                        "endOffsets": "481,679"
+                    },
+                    "to": {
+                        "startLines": "17,24",
+                        "startColumns": "4,4",
+                        "startOffsets": "797,1088",
+                        "endLines": "23,26",
+                        "endColumns": "12,12",
+                        "endOffsets": "1083,1243"
+                    }
+                }
+            ]
+        }
+    ]
+}
