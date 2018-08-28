@@ -432,7 +432,7 @@ public class BleActivity extends Activity implements OnItemClickListener,
             flag = 3;
             getSignature(
                     "00",
-                    "00000002",
+                    "10000002",
                     "112233445566778811223344556677881122334455667788112233445566778811223344556677881122334455667788112233445566778811223344556677881122334455667788112233445566778811223344556677881122334455667788");
         } else if (obj == APIId.ExchangeTransparentData4.ordinal()) {
             // 衍生公私鑰對-以太坊
