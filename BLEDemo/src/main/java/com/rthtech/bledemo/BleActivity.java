@@ -1,19 +1,15 @@
 package com.rthtech.bledemo;
 
-import java.io.BufferedReader;
-
-import java.io.PrintWriter;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Objects;
 
-import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.Dialog;
 import android.content.DialogInterface;
-import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.InputFilter;
@@ -24,7 +20,6 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.View.OnClickListener;
-import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.ArrayAdapter;
@@ -38,6 +33,8 @@ import android.widget.Toast;
 
 import com.rthtech.ble.Controller;
 import com.rthtech.ble.Data;
+
+import static com.rthtech.bledemo.Util.AddSpace;
 
 
 public class BleActivity extends Activity implements OnItemClickListener,
@@ -58,16 +55,7 @@ public class BleActivity extends Activity implements OnItemClickListener,
     private List<String> mListDeviceAddress = null;
     private boolean mScanMode = false;
     private InputData mInputData = new InputData();
-    boolean isRun = true;
-    EditText edtsendms;
-    Button btnsend;
-    SharedPreferences sp;
-    Button btnSetting;
-    PrintWriter out;
-    BufferedReader in;
     public boolean mTestCardId;
-    public String[] cardinfolist;
-    public String result;
 
     // 卡片操作相关变量
     public String CLA;
@@ -81,7 +69,6 @@ public class BleActivity extends Activity implements OnItemClickListener,
     public String masterkey = "";
     public String PublicKey = "";
     public String SignValue = "";
-    public String StrRetrun = "";
     public String StrApdu = "";
 
     // 卡片操作记时变量
@@ -92,7 +79,7 @@ public class BleActivity extends Activity implements OnItemClickListener,
     public int flag = -1;
 
     private class MyNumberKeyListener extends NumberKeyListener {
-        public MyNumberKeyListener(boolean hex) {
+        private MyNumberKeyListener(boolean hex) {
             this.hex = hex;
         }
 
@@ -115,45 +102,43 @@ public class BleActivity extends Activity implements OnItemClickListener,
         }
     }
 
-    ;
-
     private static class InputData {
-        public boolean boolValue;
-        public byte byteValue1;
-        public byte byteValue2;
-        public byte[] dataValue1;
+        private boolean boolValue;
+        private byte byteValue1;
+        private byte byteValue2;
+        private byte[] dataValue1;
         public int dataLength1;
-        public String title;
-        public String labelBool;
-        public String labelByte1;
-        public String labelByte2;
-        public String labelData1;
+        private String title;
+        private String labelBool;
+        private String labelByte1;
+        private String labelByte2;
+        private String labelData1;
         public boolean asciiData1;
 
-        public InputData() {
+        private InputData() {
             reset();
         }
 
-        public void reset() {
+        private void reset() {
             title = null;
             labelBool = null;
             labelByte1 = null;
             labelByte2 = null;
             labelData1 = null;
             boolValue = false;
-            byteValue1 = (byte) 0;
-            byteValue2 = (byte) 0;
+            byteValue1 = ( byte ) 0;
+            byteValue2 = ( byte ) 0;
             dataValue1 = null;
             asciiData1 = false;
         }
 
-        public void setDataLength(int length) {
+        private void setDataLength(int length) {
             dataLength1 = length;
         }
 
-        public void set(String title, String labelBool, boolean boolValue,
-                        String labelByte1, byte byteValue1, String labelData1,
-                        byte[] dataValue1) {
+        private void set(String title, String labelBool, boolean boolValue,
+                         String labelByte1, byte byteValue1, String labelData1,
+                         byte[] dataValue1) {
             reset();
             this.title = title;
             this.labelBool = labelBool;
@@ -164,8 +149,8 @@ public class BleActivity extends Activity implements OnItemClickListener,
             this.dataValue1 = dataValue1;
         }
 
-        public void set(String title, String labelByte1, byte byteValue1,
-                        String labelData1, byte[] dataValue1) {
+        private void set(String title, String labelByte1, byte byteValue1,
+                         String labelData1, byte[] dataValue1) {
             reset();
             this.title = title;
             this.labelByte1 = labelByte1;
@@ -174,15 +159,15 @@ public class BleActivity extends Activity implements OnItemClickListener,
             this.dataValue1 = dataValue1;
         }
 
-        public void set(String title, String labelBool, boolean boolValue) {
+        private void set(String title, String labelBool, boolean boolValue) {
             reset();
             this.title = title;
             this.labelBool = labelBool;
             this.boolValue = boolValue;
         }
 
-        public void set(String title, String labelByte1, byte byteValue1,
-                        String labelByte2, byte byteValue2) {
+        private void set(String title, String labelByte1, byte byteValue1,
+                         String labelByte2, byte byteValue2) {
             reset();
             this.title = title;
             this.labelByte1 = labelByte1;
@@ -191,15 +176,15 @@ public class BleActivity extends Activity implements OnItemClickListener,
             this.byteValue2 = byteValue2;
         }
 
-        public void set(String title, String labelByte1, byte byteValue1) {
+        private void set(String title, String labelByte1, byte byteValue1) {
             reset();
             this.title = title;
             this.labelByte1 = labelByte1;
             this.byteValue1 = byteValue1;
         }
 
-        public void set(String title, String labelData1, byte[] dataValue1,
-                        boolean ascii) {
+        private void set(String title, String labelData1, byte[] dataValue1,
+                         boolean ascii) {
             reset();
             this.title = title;
             this.labelData1 = labelData1;
@@ -214,9 +199,8 @@ public class BleActivity extends Activity implements OnItemClickListener,
 
     enum APIId {
         AntennaControl, SelectCard, LoginSector, ExchangeTransparentData1, ExchangeTransparentData2, ExchangeTransparentData3, ExchangeTransparentData4, ExchangeTransparentData6, ExchangeTransparentData5, ManageLED, GetFirmwareVersion, ModifyDeviceName, BeepControl, ReadDeviceName, OriginalData, PairDevice
-    };
+    }
 
-    @SuppressLint("HandlerLeak")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -226,14 +210,14 @@ public class BleActivity extends Activity implements OnItemClickListener,
         mAdapterAPI = new SimpleAdapter(this, mListAPI,
                 R.layout.simple_list_item_2, new String[]{"name", "desc"},
                 new int[]{android.R.id.text1, android.R.id.text2});
-        mListViewAPI = (ListView) findViewById(R.id.listViewAPI);
+        mListViewAPI = findViewById(R.id.listViewAPI);
         mListViewAPI.setAdapter(mAdapterAPI);
         mListViewAPI.setOnItemClickListener(this);
 
         mListLog = new ArrayList<String>();
         mAdapterLog = new ArrayAdapter<String>(this,
                 R.layout.simple_list_item_1, mListLog);
-        mListViewLog = (ListView) findViewById(R.id.listViewLog);
+        mListViewLog = findViewById(R.id.listViewLog);
         if (null != mListViewLog) {
             mListViewLog.setAdapter(mAdapterLog);
         }
@@ -244,26 +228,26 @@ public class BleActivity extends Activity implements OnItemClickListener,
 
         Button btn;
 
-        btn = (Button) findViewById(R.id.btnScan);
+        btn = findViewById(R.id.btnScan);
         btn.setOnClickListener(this);
         btn.setText(R.string.scan);
 
-        btn = (Button) findViewById(R.id.btnStart);
+        btn = findViewById(R.id.btnStart);
         btn.setOnClickListener(this);
         btn.setText(R.string.connect);
         btn.setEnabled(false);
 
-        btn = (Button) findViewById(R.id.btnPair);
+        btn = findViewById(R.id.btnPair);
         btn.setOnClickListener(this);
         btn.setText(R.string.pair);
         btn.setEnabled(false);
 
-        btn = (Button) findViewById(R.id.btnCardId);
+        btn = findViewById(R.id.btnCardId);
         btn.setOnClickListener(this);
         btn.setText(R.string.card_id);
         btn.setEnabled(false);
 
-        btn = (Button) findViewById(R.id.btnClear);
+        btn = findViewById(R.id.btnClear);
         btn.setOnClickListener(this);
         btn.setText(R.string.clear);
 
@@ -294,7 +278,7 @@ public class BleActivity extends Activity implements OnItemClickListener,
     }
 
     private TextView setText(int id, int resid) {
-        TextView tv = (TextView) findViewById(id);
+        TextView tv = findViewById(id);
         if (null != tv) {
             tv.setText(resid);
         }
@@ -329,45 +313,45 @@ public class BleActivity extends Activity implements OnItemClickListener,
     private void initAPIList() {
         Map<String, String> item;
         if (null == mListAPI) {
-            mListAPI = new ArrayList<Map<String, String>>();
-            item = new HashMap<String, String>();
+            mListAPI = new ArrayList<>();
+            item = new HashMap<>();
             item.put("name", "开关场");
             item.put("desc", "args: true/false - on/off");
             item.put("id", "" + APIId.AntennaControl.ordinal());
             mListAPI.add(item);
 
-            item = new HashMap<String, String>();
+            item = new HashMap<>();
             item.put("name", "寻卡");
             item.put("desc", "no args");
             item.put("id", "" + APIId.SelectCard.ordinal());
             mListAPI.add(item);
 
-            item = new HashMap<String, String>();
+            item = new HashMap<>();
             item.put("name", "生成seed");
             item.put("id", "" + APIId.ExchangeTransparentData1.ordinal());
             mListAPI.add(item);
 
-            item = new HashMap<String, String>();
+            item = new HashMap<>();
             item.put("name", "衍生公私钥-比特币");
             item.put("id", "" + APIId.ExchangeTransparentData2.ordinal());
             mListAPI.add(item);
 
-            item = new HashMap<String, String>();
+            item = new HashMap<>();
             item.put("name", "数字签名-比特币");
             item.put("id", "" + APIId.ExchangeTransparentData3.ordinal());
             mListAPI.add(item);
 
-            item = new HashMap<String, String>();
+            item = new HashMap<>();
             item.put("name", "衍生公私钥-以太坊");
             item.put("id", "" + APIId.ExchangeTransparentData4.ordinal());
             mListAPI.add(item);
 
-            item = new HashMap<String, String>();
+            item = new HashMap<>();
             item.put("name", "数字签名-以太坊");
             item.put("id", "" + APIId.ExchangeTransparentData5.ordinal());
             mListAPI.add(item);
 
-            item = new HashMap<String, String>();
+            item = new HashMap<>();
             item.put("name", "seed恢复");
             item.put("id", "" + APIId.ExchangeTransparentData6.ordinal());
             mListAPI.add(item);
@@ -379,12 +363,12 @@ public class BleActivity extends Activity implements OnItemClickListener,
     @Override
     public void onItemClick(AdapterView<?> parent, View view, int position,
                             long id) {
-        byte[] key = {(byte) 0xff, (byte) 0xff, (byte) 0xff, (byte) 0xff,
-                (byte) 0xff, (byte) 0xff};
-        byte[] data = {(byte) 0, (byte) 0, (byte) 0, (byte) 0, (byte) 0,
-                (byte) 0, (byte) 0, (byte) 0, (byte) 0, (byte) 0, (byte) 0,
-                (byte) 0, (byte) 0, (byte) 0, (byte) 0, (byte) 0};
-        byte[] page = {(byte) 0, (byte) 0, (byte) 0, (byte) 0};
+        byte[] key = {( byte ) 0xff, ( byte ) 0xff, ( byte ) 0xff, ( byte ) 0xff,
+                ( byte ) 0xff, ( byte ) 0xff};
+        byte[] data = {( byte ) 0, ( byte ) 0, ( byte ) 0, ( byte ) 0, ( byte ) 0,
+                ( byte ) 0, ( byte ) 0, ( byte ) 0, ( byte ) 0, ( byte ) 0, ( byte ) 0,
+                ( byte ) 0, ( byte ) 0, ( byte ) 0, ( byte ) 0, ( byte ) 0};
+        byte[] page = {( byte ) 0, ( byte ) 0, ( byte ) 0, ( byte ) 0};
 
         int obj;
         Map<String, String> item;
@@ -399,7 +383,7 @@ public class BleActivity extends Activity implements OnItemClickListener,
             showDataUI(APIId.AntennaControl, "Antenna on or off", true);
         } else if (obj == APIId.SelectCard.ordinal()) {
             // SelectCard
-            if (!checkSessionStatus()) {
+            if (checkSessionStatus()) {
                 return;
             }
             if (mController.isBusy()) {
@@ -412,7 +396,7 @@ public class BleActivity extends Activity implements OnItemClickListener,
             // LoginSector
             setDataLength(6);
             showDataUI(APIId.LoginSector, "Master Key", true, "Sector Number",
-                    (byte) 1, "Key (6 bytes)", key);
+                    ( byte ) 1, "Key (6 bytes)", key);
 
         } else if (obj == APIId.ExchangeTransparentData1.ordinal()) {
             // 生成masterkey
@@ -456,7 +440,6 @@ public class BleActivity extends Activity implements OnItemClickListener,
      * 生成Seed
      *
      * @param key 用户输入的支付密码，长度任意
-     * @return 以TLV格式将seed密文返回
      */
     public void CreatSeed(String key) {
         CLA = "80";
@@ -464,11 +447,11 @@ public class BleActivity extends Activity implements OnItemClickListener,
         P1 = "00";
         P2 = "00";
         LC = "12";
-        DATE = Utils.getSha1(key).substring(0, 32)
-                + CRCUtil.getCrc16(Utils.getSha1(key).substring(0, 32));
+        DATE = Objects.requireNonNull(Utils.getSha1(key)).substring(0, 32)
+                + CRCUtil.getCrc16(Objects.requireNonNull(Utils.getSha1(key)).substring(0, 32));
         LE = "44";
         StrApdu = CLA + INS + P1 + P2 + LC + DATE + LE;
-        log("发送==>>" + Util.AddSpace(StrApdu));
+        log("发送==>>" + AddSpace(StrApdu));
 
         final byte[] Apdudata = Util.hexStringToByte(StrApdu.toUpperCase()
                 .replace(" ", ""));
@@ -481,7 +464,6 @@ public class BleActivity extends Activity implements OnItemClickListener,
      *
      * @param coinType  `00`表示?特币；`3C`表示以太坊
      * @param accountID 钱包ID 4字节
-     * @return 以TLV格式返回公钥和索引
      */
     public void getPublicKey(String coinType, String accountID) {
         CLA = "80";
@@ -492,7 +474,7 @@ public class BleActivity extends Activity implements OnItemClickListener,
         DATE = accountID;
         LE = "44";
         StrApdu = CLA + INS + P1 + P2 + LC + DATE + LE;
-        log("发送==>>" + Util.AddSpace(StrApdu));
+        log("发送==>>" + AddSpace(StrApdu));
         final byte[] Apdudata = Util.hexStringToByte(StrApdu.toUpperCase()
                 .replace(" ", ""));
         begintime = System.currentTimeMillis();
@@ -505,7 +487,6 @@ public class BleActivity extends Activity implements OnItemClickListener,
      * @param coinType        `00`表示?比特币；`3C`表示以太坊
      * @param accountID       钱包ID
      * @param hashTransaction 待签名的Hash值
-     * @return 返回签名结果。返回结果是（r, s），采用SecP256k1标准参数，使用ECDSA做签名
      */
     public void getSignature(String coinType, String accountID,
                              String hashTransaction) {
@@ -517,7 +498,7 @@ public class BleActivity extends Activity implements OnItemClickListener,
         DATE = accountID + hashTransaction;
         LE = "44";
         StrApdu = CLA + INS + P1 + P2 + LC + DATE + LE;
-        log("发送==>>" + Util.AddSpace(StrApdu));
+        log("发送==>>" + AddSpace(StrApdu));
         final byte[] Apdudata = Util.hexStringToByte(StrApdu.toUpperCase()
                 .replace(" ", ""));
         begintime = System.currentTimeMillis();
@@ -529,7 +510,6 @@ public class BleActivity extends Activity implements OnItemClickListener,
      *
      * @param key            用户支付密码
      * @param seedCiphertext seed密文
-     * @return 以TLV格式返回恢复结果（成功0/失败1）
      */
     public void recoveryKey(String key, String seedCiphertext) {
         CLA = "80";
@@ -540,7 +520,7 @@ public class BleActivity extends Activity implements OnItemClickListener,
         DATE = key + seedCiphertext;
         LE = "04";
         StrApdu = CLA + INS + P1 + P2 + LC + DATE + LE;
-        log("发送==>>" + Util.AddSpace(StrApdu));
+        log("发送==>>" + AddSpace(StrApdu));
         final byte[] Apdudata = Util.hexStringToByte(StrApdu.toUpperCase()
                 .replace(" ", ""));
         begintime = System.currentTimeMillis();
@@ -550,13 +530,13 @@ public class BleActivity extends Activity implements OnItemClickListener,
     private boolean checkSessionStatus() {
         if (null == mController) {
             log("Service is not ready!");
-            return false;
+            return true;
         }
         if (!mController.isReady()) {
             log("No device connected!");
-            return false;
+            return true;
         }
-        return true;
+        return false;
     }
 
     public void log(String str) {
@@ -585,11 +565,9 @@ public class BleActivity extends Activity implements OnItemClickListener,
 
         obj = command;
         bool = mInputData.boolValue;
-        byte1 = mInputData.byteValue1;
-        byte2 = mInputData.byteValue2;
         data1 = mInputData.dataValue1;
 
-        if (!checkSessionStatus()) {
+        if (checkSessionStatus()) {
             return;
         }
         if (mController.isBusy()) {
@@ -774,23 +752,23 @@ public class BleActivity extends Activity implements OnItemClickListener,
     private void updateInputData() {
         RadioButton rb;
         if (null != mInputData.labelBool) {
-            rb = (RadioButton) mDialogView.findViewById(R.id.radioTrue);
+            rb = mDialogView.findViewById(R.id.radioTrue);
             mInputData.boolValue = rb.isChecked();
         }
 
         if (null != mInputData.labelByte1) {
-            mInputData.byteValue1 = Util.hex2byte(getText(mDialogView,
-                    R.id.edByte1));
+            mInputData.byteValue1 = Util.hex2byte(Objects.requireNonNull(getText(mDialogView,
+                    R.id.edByte1)));
         }
 
         if (null != mInputData.labelByte2) {
-            mInputData.byteValue2 = Util.hex2byte(getText(mDialogView,
-                    R.id.edByte2));
+            mInputData.byteValue2 = Util.hex2byte(Objects.requireNonNull(getText(mDialogView,
+                    R.id.edByte2)));
         }
 
         if (null != mInputData.labelData1) {
             if (mInputData.asciiData1) {
-                mInputData.dataValue1 = getText(mDialogView, R.id.edData1)
+                mInputData.dataValue1 = Objects.requireNonNull(getText(mDialogView, R.id.edData1))
                         .getBytes();
             } else {
                 mInputData.dataValue1 = Util.hex2bytes(getText(mDialogView,
@@ -800,7 +778,7 @@ public class BleActivity extends Activity implements OnItemClickListener,
     }
 
     private void setText(View parent, int id, String text) {
-        TextView v = (TextView) parent.findViewById(id);
+        TextView v = parent.findViewById(id);
         if (null != v) {
             v.setText(text);
         }
@@ -815,7 +793,7 @@ public class BleActivity extends Activity implements OnItemClickListener,
 
     private void HexMonitor(View parent, int id) {
         EditText ed;
-        ed = (EditText) parent.findViewById(id);
+        ed = parent.findViewById(id);
         if (null != ed) {
         }
     }
@@ -831,7 +809,7 @@ public class BleActivity extends Activity implements OnItemClickListener,
         RadioButton rb;
         int l;
         mDialogView = this.getLayoutInflater().inflate(R.layout.activity_data,
-                (ViewGroup) null);
+                null);
 
         view = mDialogView;
         b.setTitle(mInputData.title);
@@ -843,9 +821,9 @@ public class BleActivity extends Activity implements OnItemClickListener,
             goneView(view, R.id.layoutBool);
         } else {
             setText(view, R.id.tvBoolLabel, mInputData.labelBool);
-            rb = (RadioButton) view.findViewById(R.id.radioTrue);
+            rb = view.findViewById(R.id.radioTrue);
             rb.setChecked(mInputData.boolValue);
-            rb = (RadioButton) view.findViewById(R.id.radioFalse);
+            rb = view.findViewById(R.id.radioFalse);
             rb.setChecked(!mInputData.boolValue);
         }
 
@@ -883,7 +861,7 @@ public class BleActivity extends Activity implements OnItemClickListener,
                             Util.hexstr(mInputData.dataValue1, false));
                 }
             }
-            ed = (EditText) view.findViewById(R.id.edData1);
+            ed = view.findViewById(R.id.edData1);
             if (null != ed) {
                 InputFilter lengthFilter;
                 TextWatcher textWatcher;
@@ -1000,7 +978,7 @@ public class BleActivity extends Activity implements OnItemClickListener,
 
     private String getText(View parent, int id) {
         TextView tv;
-        tv = (TextView) parent.findViewById(id);
+        tv = parent.findViewById(id);
         if (null != tv) {
             return tv.getText().toString();
         }
@@ -1112,33 +1090,33 @@ public class BleActivity extends Activity implements OnItemClickListener,
                 try {
                     if (ErrMessage(Util.hexstr(result.getData(), false)) != ""
                             | ErrMessage(Util.hexstr(result.getData(), false))
-                            .equals("") == true) {
+                            .equals("")) {
                         log("返回<<== " + Util.hexstr(result.getData(), true));
                         switch (flag) {
                             case 1:
                                 masterkey = Util.hexstr(result.getData(), false)
                                         .substring(4, 132);
-                                log("双重加密后的SEED：  " + Util.AddSpace(masterkey));
+                                log("双重加密后的SEED：  " + AddSpace(masterkey));
                                 break;
                             case 2:
                                 PublicKey = Util.hexstr(result.getData(), false)
                                         .substring(4, 132);
-                                log("公钥数据-比特币：  " + Util.AddSpace(PublicKey));
+                                log("公钥数据-比特币：  " + AddSpace(PublicKey));
                                 break;
                             case 3:
                                 SignValue = Util.hexstr(result.getData(), false)
                                         .substring(4, 132);
-                                log("签名结果-比特币：  " + Util.AddSpace(SignValue));
+                                log("签名结果-比特币：  " + AddSpace(SignValue));
                                 break;
                             case 4:
                                 PublicKey = Util.hexstr(result.getData(), false)
                                         .substring(4, 132);
-                                log("公钥数据-以太坊：  " + Util.AddSpace(PublicKey));
+                                log("公钥数据-以太坊：  " + AddSpace(PublicKey));
                                 break;
                             case 5:
                                 SignValue = Util.hexstr(result.getData(), false)
                                         .substring(4, 132);
-                                log("签名结果-以太坊：  " + Util.AddSpace(SignValue));
+                                log("签名结果-以太坊：  " + AddSpace(SignValue));
                                 break;
                             case 6:
                                 log("成功标识：  "
@@ -1166,10 +1144,7 @@ public class BleActivity extends Activity implements OnItemClickListener,
     }
 
     /**
-     * SW 返回解析
-     *
-     * @param
-     * @return
+     * 重发APDU指令
      */
     public void ReSend() {
         final byte[] Apdudata = Util.hexStringToByte(StrApdu.toUpperCase()
@@ -1182,7 +1157,7 @@ public class BleActivity extends Activity implements OnItemClickListener,
         if (Sw.equals("6E 00")) {
             errmessage = "CLA不合法";
         }
-        if (Sw.equals("6D 00") ) {
+        if (Sw.equals("6D 00")) {
             errmessage = "INS不合法";
         }
         if (Sw.equals("6A 86")) {

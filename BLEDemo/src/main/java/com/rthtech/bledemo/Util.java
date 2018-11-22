@@ -83,10 +83,6 @@ public class Util {
 		sExternalLogFilePath = logFilePath;
 	}
 	
-	/**
-	 * 
-	 * * ??16????????????????????? * @param hex * @return
-	 * */
 	public static byte[] hexStringToByte(String hex) {
 		int len = (hex.length() / 2);
 		byte[] result = new byte[len];
@@ -101,7 +97,7 @@ public class Util {
 		byte b = (byte) "0123456789ABCDEF".indexOf(c);
 		return b;
 	}
-	
+
 	public static void log(String str){
 		java.text.SimpleDateFormat fmt;
 		fmt = new java.text.SimpleDateFormat("MM-dd HH:mm:ss", java.util.Locale.CHINA);
@@ -127,6 +123,7 @@ public class Util {
 			}
 		}
 	}
+
 	public static String AddSpace(String msg) {
 
 		StringBuilder str = new StringBuilder(msg.replace(" ", ""));
