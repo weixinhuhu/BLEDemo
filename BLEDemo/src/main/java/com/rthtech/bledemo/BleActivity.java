@@ -1179,22 +1179,22 @@ public class BleActivity extends Activity implements OnItemClickListener,
 
     public String ErrMessage(String Sw) {
         errmessage = "";
-        if (Sw.equals("6E 00") == true) {
+        if (Sw.equals("6E 00")) {
             errmessage = "CLA不合法";
         }
-        if (Sw.equals("6D 00") == true) {
+        if (Sw.equals("6D 00") ) {
             errmessage = "INS不合法";
         }
-        if (Sw.equals("6A 86") == true) {
+        if (Sw.equals("6A 86")) {
             errmessage = "p1，p2参数不合法";
         }
-        if (Sw.equals("67 00") == true) {
+        if (Sw.equals("67 00")) {
             errmessage = "Lc长度不正确";
         }
-        if (Sw.equals("69 85") == true) {
+        if (Sw.equals("69 85")) {
             errmessage = "卡片SEED已存在";
         }
-        if (Sw.equals("69 88") == true) {
+        if (Sw.equals("69 88")) {
             errmessage = "私钥不存在";
         }
         return errmessage;
