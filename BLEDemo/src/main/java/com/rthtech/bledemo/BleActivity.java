@@ -84,7 +84,7 @@ public class BleActivity extends Activity implements OnItemClickListener,
         }
 
         private char[] hexChars = "0123456789abcdefABCDEF".toCharArray();
-        private boolean hex = true;
+        private boolean hex;
         private char[] ascChars = "0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ!@#$%^&*()-=_+`~,./<>?[]{}\\|\'\" "
                 .toCharArray();
 
@@ -95,9 +95,7 @@ public class BleActivity extends Activity implements OnItemClickListener,
 
         @Override
         protected char[] getAcceptedChars() {
-            if (hex) {
-                return hexChars;
-            }
+            if (hex) return hexChars;
             return ascChars;
         }
     }
@@ -198,7 +196,7 @@ public class BleActivity extends Activity implements OnItemClickListener,
     private Controller mController = null;
 
     enum APIId {
-        AntennaControl, SelectCard, LoginSector, ExchangeTransparentData1, ExchangeTransparentData2, ExchangeTransparentData3, ExchangeTransparentData4, ExchangeTransparentData6, ExchangeTransparentData5, ManageLED, GetFirmwareVersion, ModifyDeviceName, BeepControl, ReadDeviceName, OriginalData, PairDevice
+        AntennaControl, SelectCard, LoginSector, ExchangeTransparentData1, ExchangeTransparentData2, ExchangeTransparentData3, ExchangeTransparentData4, ExchangeTransparentData6, ExchangeTransparentData5, PairDevice
     }
 
     @Override
@@ -214,16 +212,14 @@ public class BleActivity extends Activity implements OnItemClickListener,
         mListViewAPI.setAdapter(mAdapterAPI);
         mListViewAPI.setOnItemClickListener(this);
 
-        mListLog = new ArrayList<String>();
-        mAdapterLog = new ArrayAdapter<String>(this,
+        mListLog = new ArrayList<>();
+        mAdapterLog = new ArrayAdapter<>(this,
                 R.layout.simple_list_item_1, mListLog);
         mListViewLog = findViewById(R.id.listViewLog);
-        if (null != mListViewLog) {
-            mListViewLog.setAdapter(mAdapterLog);
-        }
+        if (null != mListViewLog) mListViewLog.setAdapter(mAdapterLog);
 
-        mListDeviceName = new ArrayList<String>();
-        mListDeviceAddress = new ArrayList<String>();
+        mListDeviceName = new ArrayList<>();
+        mListDeviceAddress = new ArrayList<>();
         mScanMode = false;
 
         Button btn;
@@ -262,10 +258,6 @@ public class BleActivity extends Activity implements OnItemClickListener,
         }
     }
 
-    public void startSocket() {
-
-    }
-
     @Override
     protected void onResume() {
         super.onResume();
@@ -277,19 +269,14 @@ public class BleActivity extends Activity implements OnItemClickListener,
         mController.term();
     }
 
-    private TextView setText(int id, int resid) {
+    private void setText(int id, int resid) {
         TextView tv = findViewById(id);
-        if (null != tv) {
-            tv.setText(resid);
-        }
-        return tv;
+        if (null != tv) tv.setText(resid);
     }
 
     private void enableView(int id, boolean enabled) {
         View v = findViewById(id);
-        if (null != v) {
-            v.setEnabled(enabled);
-        }
+        if (null != v) v.setEnabled(enabled);
     }
 
     @Override
@@ -304,10 +291,7 @@ public class BleActivity extends Activity implements OnItemClickListener,
         // automatically handle clicks on the Home/Up button, so long
         // as you specify a parent activity in AndroidManifest.xml.
         int id = item.getItemId();
-        if (id == R.id.action_settings) {
-            return true;
-        }
-        return super.onOptionsItemSelected(item);
+        return id == R.id.action_settings || super.onOptionsItemSelected(item);
     }
 
     private void initAPIList() {
@@ -358,7 +342,6 @@ public class BleActivity extends Activity implements OnItemClickListener,
         }
     }
 
-    // click on API List
     @SuppressWarnings("unused")
     @Override
     public void onItemClick(AdapterView<?> parent, View view, int position,
@@ -378,14 +361,12 @@ public class BleActivity extends Activity implements OnItemClickListener,
         obj = Integer.parseInt(item.get("id"));
 
         mCommand = obj;
-        if (obj == APIId.AntennaControl.ordinal()) {
-            // AntennaControl
+        // AntennaControl
+        if (obj == APIId.AntennaControl.ordinal())
             showDataUI(APIId.AntennaControl, "Antenna on or off", true);
-        } else if (obj == APIId.SelectCard.ordinal()) {
+        else if (obj == APIId.SelectCard.ordinal()) {
             // SelectCard
-            if (checkSessionStatus()) {
-                return;
-            }
+            if (checkSessionStatus()) return;
             if (mController.isBusy()) {
                 log("Another command is running!");
                 return;
@@ -541,9 +522,7 @@ public class BleActivity extends Activity implements OnItemClickListener,
 
     public void log(String str) {
         if (null != mListViewLog) {
-            if (mListLog.size() >= 100) {
-                mListLog.remove(0);
-            }
+            if (mListLog.size() >= 100) mListLog.remove(0);
             mListLog.add(str);
             mAdapterLog.notifyDataSetChanged();
             mListViewLog.smoothScrollToPosition(mListLog.size() - 1);
@@ -567,9 +546,7 @@ public class BleActivity extends Activity implements OnItemClickListener,
         bool = mInputData.boolValue;
         data1 = mInputData.dataValue1;
 
-        if (checkSessionStatus()) {
-            return;
-        }
+        if (checkSessionStatus()) return;
         if (mController.isBusy()) {
             log("Another command is running!");
             return;
@@ -577,31 +554,24 @@ public class BleActivity extends Activity implements OnItemClickListener,
         if (obj == APIId.AntennaControl.ordinal()) {
             log(APIId.AntennaControl);
             mController.antennaControl(bool);
-        } else if (obj == APIId.SelectCard.ordinal()) {
-            // impossible
-            mController.selectCard();
-        } else if (obj == APIId.PairDevice.ordinal()) {
-            log(APIId.PairDevice);
-            mController.pairDevice(data1);
-        } else if (obj == APIId.ExchangeTransparentData1.ordinal()) {
-            log(APIId.ExchangeTransparentData1);
-            mController.exchangeTransparentData(data1, data1.length);
-        }
+        } else // impossible
+            if (obj == APIId.SelectCard.ordinal()) mController.selectCard();
+            else if (obj == APIId.PairDevice.ordinal()) {
+                log(APIId.PairDevice);
+                mController.pairDevice(data1);
+            } else if (obj == APIId.ExchangeTransparentData1.ordinal()) {
+                log(APIId.ExchangeTransparentData1);
+                mController.exchangeTransparentData(data1, data1.length);
+            }
     }
 
     @Override
     public void onClick(View v) {
-        if (v.getId() == R.id.btnScan) {
-            onButtonScan();
-        } else if (v.getId() == R.id.btnStart) {
-            onButtonStart();
-        } else if (v.getId() == R.id.btnCardId) {
-            onButtonCardId();
-        } else if (v.getId() == R.id.btnClear) {
-            onButtonClear();
-        } else if (v.getId() == R.id.btnPair) {
-            onButtonPair();
-        }
+        if (v.getId() == R.id.btnScan) onButtonScan();
+        else if (v.getId() == R.id.btnStart) onButtonStart();
+        else if (v.getId() == R.id.btnCardId) onButtonCardId();
+        else if (v.getId() == R.id.btnClear) onButtonClear();
+        else if (v.getId() == R.id.btnPair) onButtonPair();
     }
 
     // for data input dialog
@@ -615,22 +585,25 @@ public class BleActivity extends Activity implements OnItemClickListener,
         }
     };
 
-    private DialogInterface.OnClickListener mDialogDeviceListListener = new DialogInterface.OnClickListener() {
-        @Override
-        public void onClick(DialogInterface dialog, int which) {
-            // connect to the device
-            int index = which;
-            if (index == Dialog.BUTTON_POSITIVE) {
+    private DialogInterface.OnClickListener mDialogDeviceListListener;
+
+    {
+        mDialogDeviceListListener = new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                // connect to the device
+                int index = which;
                 // scan button
-                onButtonScan();
-            } else if (index >= 0 && index < mListDeviceName.size()) {
-                // select a device from list, connect
-                String addr = mListDeviceAddress.get(index);
-                mScanMode = false;
-                mController.connect(addr);
+                if (index == Dialog.BUTTON_POSITIVE) onButtonScan();
+                else if (index >= 0 && index < mListDeviceName.size()) {
+                    // select a device from list, connect
+                    String addr = mListDeviceAddress.get(index);
+                    mScanMode = false;
+                    mController.connect(addr);
+                }
             }
-        }
-    };
+        };
+    }
 
     private void onButtonScan() {
         int err;
@@ -645,12 +618,8 @@ public class BleActivity extends Activity implements OnItemClickListener,
             mListDeviceName.clear();
             mListDeviceAddress.clear();
             err = mController.scan();
-            if (err != Data.ERROR_OK) {
-                log("start scan failed, err=" + errDesc(err));
-            }
-        } else if (mScanMode) {
-            mController.stop();
-        }
+            if (err != Data.ERROR_OK) log("start scan failed, err=" + errDesc(err));
+        } else if (mScanMode) mController.stop();
     }
 
     private void onButtonStart() {
@@ -661,25 +630,21 @@ public class BleActivity extends Activity implements OnItemClickListener,
             log("Service is not ready!");
             return;
         }
-        if (mScanMode) {
-            return;
-        }
+        if (mScanMode) return;
 
         if (mListDeviceAddress.size() == 0) {
             log("No device, please scan device firstly");
             return;
         }
-        if (!mController.isIdle()) {
-            mController.disconnect();
-        } else {
+        if (!mController.isIdle()) mController.disconnect();
+        else {
             // has devices and is idle, display device list
             b = new AlertDialog.Builder(this);
             b.setTitle("Device List");
             items = new String[mListDeviceName.size()];
-            for (index = 0; index < mListDeviceName.size(); index++) {
+            for (index = 0; index < mListDeviceName.size(); index++)
                 items[index] = mListDeviceName.get(index) + " ("
                         + mListDeviceAddress.get(index) + ")";
-            }
             b.setItems(items, mDialogDeviceListListener);
             b.setPositiveButton(R.string.scan, mDialogDeviceListListener);
             b.setNegativeButton(R.string.cancel, mDialogDeviceListListener);
@@ -700,12 +665,8 @@ public class BleActivity extends Activity implements OnItemClickListener,
             log("Service is not ready!");
             return;
         }
-        if (!mController.isReady()) {
-            return;
-        }
-        if (mController.isBusy()) {
-            return;
-        }
+        if (!mController.isReady()) return;
+        if (mController.isBusy()) return;
         log("checking Card Id...");
         mTestCardId = true;
         err = mController.antennaControl(true);
@@ -722,30 +683,19 @@ public class BleActivity extends Activity implements OnItemClickListener,
     }
 
     private String errDesc(int err) {
-        String desc = "";
-        if (err == Data.ERROR_OK) {
-            desc = "ok";
-        } else if (err == Data.ERROR_DEVICE_DISCONNECTED) {
-            desc = "device disconnected";
-        } else if (err == Data.ERROR_USER_CANCEL) {
-            desc = "user cancel";
-        } else if (err == Data.ERROR_BUSY) {
-            desc = "ble is busy";
-        } else if (err == Data.ERROR_NO_DEVICE) {
-            desc = "no device";
-        } else if (err == Data.ERROR_NO_SERVICE) {
-            desc = "no service";
-        } else if (err == Data.ERROR_FAILED_TO_SET_CHARACTERISTIC) {
+        String desc;
+        if (err == Data.ERROR_OK) desc = "ok";
+        else if (err == Data.ERROR_DEVICE_DISCONNECTED) desc = "device disconnected";
+        else if (err == Data.ERROR_USER_CANCEL) desc = "user cancel";
+        else if (err == Data.ERROR_BUSY) desc = "ble is busy";
+        else if (err == Data.ERROR_NO_DEVICE) desc = "no device";
+        else if (err == Data.ERROR_NO_SERVICE) desc = "no service";
+        else if (err == Data.ERROR_FAILED_TO_SET_CHARACTERISTIC)
             desc = "write characteristic error";
-        } else if (err == Data.ERROR_FAILED_TO_SET_DESCRIPTOR) {
-            desc = "write descriptor error";
-        } else if (err == Data.ERROR_NOT_READY) {
-            desc = "not ready";
-        } else if (err == Data.ERROR_NOT_SUPPORTED) {
-            desc = "not supported";
-        } else {
-            desc = "" + err;
-        }
+        else if (err == Data.ERROR_FAILED_TO_SET_DESCRIPTOR) desc = "write descriptor error";
+        else if (err == Data.ERROR_NOT_READY) desc = "not ready";
+        else if (err == Data.ERROR_NOT_SUPPORTED) desc = "not supported";
+        else desc = "" + err;
         return desc;
     }
 
@@ -756,46 +706,34 @@ public class BleActivity extends Activity implements OnItemClickListener,
             mInputData.boolValue = rb.isChecked();
         }
 
-        if (null != mInputData.labelByte1) {
+        if (null != mInputData.labelByte1)
             mInputData.byteValue1 = Util.hex2byte(Objects.requireNonNull(getText(mDialogView,
                     R.id.edByte1)));
-        }
 
-        if (null != mInputData.labelByte2) {
+        if (null != mInputData.labelByte2)
             mInputData.byteValue2 = Util.hex2byte(Objects.requireNonNull(getText(mDialogView,
                     R.id.edByte2)));
-        }
 
-        if (null != mInputData.labelData1) {
-            if (mInputData.asciiData1) {
-                mInputData.dataValue1 = Objects.requireNonNull(getText(mDialogView, R.id.edData1))
-                        .getBytes();
-            } else {
-                mInputData.dataValue1 = Util.hex2bytes(getText(mDialogView,
-                        R.id.edData1));
-            }
-        }
+        if (null != mInputData.labelData1) if (mInputData.asciiData1)
+            mInputData.dataValue1 = Objects.requireNonNull(getText(mDialogView, R.id.edData1))
+                    .getBytes();
+        else mInputData.dataValue1 = Util.hex2bytes(getText(mDialogView,
+                    R.id.edData1));
     }
 
     private void setText(View parent, int id, String text) {
         TextView v = parent.findViewById(id);
-        if (null != v) {
-            v.setText(text);
-        }
+        if (null != v) v.setText(text);
     }
 
     private void goneView(View parent, int id) {
         View v = parent.findViewById(id);
-        if (null != v) {
-            v.setVisibility(View.GONE);
-        }
+        if (null != v) v.setVisibility(View.GONE);
     }
 
     private void HexMonitor(View parent, int id) {
         EditText ed;
         ed = parent.findViewById(id);
-        if (null != ed) {
-        }
     }
 
     private void setDataLength(int length) {
@@ -817,9 +755,8 @@ public class BleActivity extends Activity implements OnItemClickListener,
         b.setPositiveButton(R.string.ok, mDialogDataInputListener);
         b.setNegativeButton(R.string.cancel, mDialogDataInputListener);
 
-        if (null == mInputData.labelBool) {
-            goneView(view, R.id.layoutBool);
-        } else {
+        if (null == mInputData.labelBool) goneView(view, R.id.layoutBool);
+        else {
             setText(view, R.id.tvBoolLabel, mInputData.labelBool);
             rb = view.findViewById(R.id.radioTrue);
             rb.setChecked(mInputData.boolValue);
@@ -827,40 +764,31 @@ public class BleActivity extends Activity implements OnItemClickListener,
             rb.setChecked(!mInputData.boolValue);
         }
 
-        if (null == mInputData.labelByte1) {
-            goneView(view, R.id.layoutByte1);
-        } else {
+        if (null == mInputData.labelByte1) goneView(view, R.id.layoutByte1);
+        else {
             HexMonitor(view, R.id.edByte1);
             setText(view, R.id.tvByte1, mInputData.labelByte1);
             setText(view, R.id.edByte1, Util.hexstr(mInputData.byteValue1));
         }
 
-        if (null == mInputData.labelByte2) {
-            goneView(view, R.id.layoutByte2);
-        } else {
+        if (null == mInputData.labelByte2) goneView(view, R.id.layoutByte2);
+        else {
             HexMonitor(view, R.id.edByte2);
             setText(view, R.id.tvByte2, mInputData.labelByte2);
             setText(view, R.id.edByte2, Util.hexstr(mInputData.byteValue2));
         }
 
-        if (null == mInputData.labelData1) {
-            goneView(view, R.id.layoutData1);
-        } else {
+        if (null == mInputData.labelData1) goneView(view, R.id.layoutData1);
+        else {
             HexMonitor(view, R.id.edData1);
-            if (mInputData.asciiData1) {
+            if (mInputData.asciiData1)
                 setText(view, R.id.tvData1, mInputData.labelData1 + " / char");
-            } else {
-                setText(view, R.id.tvData1, mInputData.labelData1 + " / hex");
-            }
-            if (null != mInputData.dataValue1) {
-                if (mInputData.asciiData1) {
-                    setText(view, R.id.edData1, new String(
-                            mInputData.dataValue1));
-                } else {
-                    setText(view, R.id.edData1,
-                            Util.hexstr(mInputData.dataValue1, false));
-                }
-            }
+            else setText(view, R.id.tvData1, mInputData.labelData1 + " / hex");
+            if (null != mInputData.dataValue1)
+                if (mInputData.asciiData1) setText(view, R.id.edData1, new String(
+                        mInputData.dataValue1));
+                else setText(view, R.id.edData1,
+                        Util.hexstr(mInputData.dataValue1, false));
             ed = view.findViewById(R.id.edData1);
             if (null != ed) {
                 InputFilter lengthFilter;
@@ -881,18 +809,12 @@ public class BleActivity extends Activity implements OnItemClickListener,
                         int l;
                         String text;
                         text = s.toString();
-                        if (null == text) {
-                            l = 0;
-                        } else {
-                            l = text.length();
-                        }
-                        if (mInputData.asciiData1) {
-                            setText(mDialogView, R.id.tvLengthIndicator, ""
-                                    + (mInputData.dataLength1 - l));
-                        } else {
-                            setText(mDialogView, R.id.tvLengthIndicator, ""
-                                    + ((mInputData.dataLength1 * 2) - l));
-                        }
+                        if (null == text) l = 0;
+                        else l = text.length();
+                        if (mInputData.asciiData1) setText(mDialogView, R.id.tvLengthIndicator, ""
+                                + (mInputData.dataLength1 - l));
+                        else setText(mDialogView, R.id.tvLengthIndicator, ""
+                                + ((mInputData.dataLength1 * 2) - l));
                     }
                 };
                 ed.addTextChangedListener(textWatcher);
@@ -911,18 +833,12 @@ public class BleActivity extends Activity implements OnItemClickListener,
                 filters[0] = lengthFilter;
                 ed.setFilters(filters);
             }
-            if (null == mInputData.dataValue1) {
-                l = 0;
-            } else {
-                l = mInputData.dataValue1.length;
-            }
-            if (mInputData.asciiData1) {
-                setText(mDialogView, R.id.tvLengthIndicator, ""
-                        + (mInputData.dataLength1 - l));
-            } else {
-                setText(mDialogView, R.id.tvLengthIndicator, ""
-                        + (mInputData.dataLength1 - l) * 2);
-            }
+            if (null == mInputData.dataValue1) l = 0;
+            else l = mInputData.dataValue1.length;
+            if (mInputData.asciiData1) setText(mDialogView, R.id.tvLengthIndicator, ""
+                    + (mInputData.dataLength1 - l));
+            else setText(mDialogView, R.id.tvLengthIndicator, ""
+                    + (mInputData.dataLength1 - l) * 2);
         }
         b.show();
     }
@@ -979,15 +895,8 @@ public class BleActivity extends Activity implements OnItemClickListener,
     private String getText(View parent, int id) {
         TextView tv;
         tv = parent.findViewById(id);
-        if (null != tv) {
-            return tv.getText().toString();
-        }
+        if (null != tv) return tv.getText().toString();
         return null;
-    }
-
-    public void logMsg(String msg) {
-        Util.log("DEBUG: " + msg);
-        Log.d(TAG, msg);
     }
 
     @Override
@@ -1001,7 +910,6 @@ public class BleActivity extends Activity implements OnItemClickListener,
             log("addr: " + mController.getDeviceAddress());
             enableView(R.id.btnScan, false);
             setText(R.id.btnStart, R.string.disconnect);
-        } else if (new_state == Data.STATE_CONNECTING_SERVICE) {
         } else if (new_state == Data.STATE_END) {
             if (mScanMode) {
                 log("scanning stop!");
@@ -1036,11 +944,8 @@ public class BleActivity extends Activity implements OnItemClickListener,
         byte[] tmp = new byte[dataLength];
         System.arraycopy(data, 0, tmp, 0, dataLength);
 
-        if (null != data) {
-            log("recv: " + Util.hexstr(tmp, true));
-        } else {
-            log("info: no data!");
-        }
+        if (null != data) log("recv: " + Util.hexstr(tmp, true));
+        else log("info: no data!");
     }
 
     @Override
@@ -1065,19 +970,15 @@ public class BleActivity extends Activity implements OnItemClickListener,
                 log("info: no data!");
                 ReSend();
                 return;
-            } else {
-                if (result.getCommand() != Command.ExchangeTransparentData) {
-                    log("info: " + result.getCommand() + ", "
-                            + result.getStatus());
-                }
-            }
+            } else if (result.getCommand() != Command.ExchangeTransparentData)
+                log("info: " + result.getCommand() + ", "
+                        + result.getStatus());
 
             if (result.getCommand() == Command.SelectCard
-                    && result.getStatus() == Status.OperationSuccess) {
+                    && result.getStatus() == Status.OperationSuccess)
                 log("      Id: " + Util.hexstr(result.getCardID(), false)
                         + ", Type: 0x"
                         + Util.hexstr(result.getCardType().getValue()));
-            }
 
             if (result.getStatus() == Status.AuthenticationRequired) {
                 log("Please pair the device firstly");
@@ -1088,7 +989,7 @@ public class BleActivity extends Activity implements OnItemClickListener,
                 endtime = System.currentTimeMillis();
                 costTime = (endtime - begintime);
                 try {
-                    if (ErrMessage(Util.hexstr(result.getData(), false)) != ""
+                    if (!ErrMessage(Util.hexstr(result.getData(), false)).equals("")
                             | ErrMessage(Util.hexstr(result.getData(), false))
                             .equals("")) {
                         log("返回<<== " + Util.hexstr(result.getData(), true));
@@ -1126,9 +1027,7 @@ public class BleActivity extends Activity implements OnItemClickListener,
                                 break;
                         }
                         log("用时：  " + costTime);
-                    } else {
-                        log("返回<<== " + errmessage);
-                    }
+                    } else log("返回<<== " + errmessage);
 
                 } catch (Exception e) {
                     log(e.toString());
@@ -1146,6 +1045,7 @@ public class BleActivity extends Activity implements OnItemClickListener,
     /**
      * 重发APDU指令
      */
+
     public void ReSend() {
         final byte[] Apdudata = Util.hexStringToByte(StrApdu.toUpperCase()
                 .replace(" ", ""));
@@ -1154,24 +1054,12 @@ public class BleActivity extends Activity implements OnItemClickListener,
 
     public String ErrMessage(String Sw) {
         errmessage = "";
-        if (Sw.equals("6E 00")) {
-            errmessage = "CLA不合法";
-        }
-        if (Sw.equals("6D 00")) {
-            errmessage = "INS不合法";
-        }
-        if (Sw.equals("6A 86")) {
-            errmessage = "p1，p2参数不合法";
-        }
-        if (Sw.equals("67 00")) {
-            errmessage = "Lc长度不正确";
-        }
-        if (Sw.equals("69 85")) {
-            errmessage = "卡片SEED已存在";
-        }
-        if (Sw.equals("69 88")) {
-            errmessage = "私钥不存在";
-        }
+        if (Sw.equals("6E 00")) errmessage = "CLA不合法";
+        if (Sw.equals("6D 00")) errmessage = "INS不合法";
+        if (Sw.equals("6A 86")) errmessage = "p1，p2参数不合法";
+        if (Sw.equals("67 00")) errmessage = "Lc长度不正确";
+        if (Sw.equals("69 85")) errmessage = "卡片SEED已存在";
+        if (Sw.equals("69 88")) errmessage = "私钥不存在";
         return errmessage;
     }
 }
