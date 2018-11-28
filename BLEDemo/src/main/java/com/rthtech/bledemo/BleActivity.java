@@ -534,7 +534,7 @@ public class BleActivity extends Activity implements OnItemClickListener,
     }
 
     private void log(APIId cmd) {
-        log("test: " + cmd.toString());
+        log(cmd.toString());
     }
 
     @SuppressWarnings("unused")

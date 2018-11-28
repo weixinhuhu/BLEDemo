@@ -1,8 +1,8 @@
 package com.rthtech.bledemo;
-
-import android.content.Context;
 import android.os.Environment;
 
+import android.content.Context;
+import android.util.Log;
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -11,10 +11,6 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.text.SimpleDateFormat;
 import java.util.Date;
-
-/**
- * Created by elena on 2017/9/4.
- */
 
 public class LogcatHelper {
 
@@ -37,11 +33,15 @@ public class LogcatHelper {
             PATH_LOGCAT = context.getFilesDir().getAbsolutePath()
                     + File.separator + "BlEDemoLog";
         }
-        File file = new File(PATH_LOGCAT);
-        if (!file.exists()) {
-            file.mkdirs();
+        try{
+            File file = new File(PATH_LOGCAT);
+            if (!file.exists()) {
+                file.mkdirs();
+            }
         }
-
+        catch(Exception e){
+            Log.d("BLE",e.toString());
+        }
     }
 
     public static LogcatHelper getInstance(Context context) {
@@ -74,17 +74,15 @@ public class LogcatHelper {
         private Process logcatProc;
         private BufferedReader mReader = null;
         private boolean mRunning = true;
-        String cmds = null;
+        String cmds;
         private String mPID;
         private FileOutputStream out = null;
 
         public LogDumper(String pid, String dir) {
             mPID = pid;
             try {
-                out = new FileOutputStream(new File(dir, "log-"
-                        + getFileName() + ".log"));
+                out = new FileOutputStream(new File(dir,  getFileName() + ".log"));
             } catch (FileNotFoundException e) {
-                // TODO Auto-generated catch block
                 e.printStackTrace();
             }
 
@@ -100,7 +98,6 @@ public class LogcatHelper {
             // cmds = "logcat  | grep \"(" + mPID + ")\"";//打印所有日志信息
             cmds = "logcat -s BLE";//打印标签过滤信息
             // cmds = "logcat *:e *:i | grep \"(" + mPID + ")\"";
-
         }
 
         public void stopLogs() {
@@ -153,11 +150,10 @@ public class LogcatHelper {
             }
 
         }
-
     }
     public  String getFileName() {
         SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
         String date = format.format(new Date(System.currentTimeMillis()));
-        return date;// 2012年10月03日 23:41:31
+        return date;
     }
 }

@@ -1,4 +1,4 @@
-#Wed Nov 28 13:47:10 CST 2018
+#Wed Nov 28 15:07:17 CST 2018
 base.0=/Users/weixin/AndroidStudioProjects/BLEDemo/BLEDemo/build/intermediates/transforms/dexMerger/debug/0
 path.0=classes.dex
 renamed.0=classes.dex
