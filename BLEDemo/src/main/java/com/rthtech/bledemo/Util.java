@@ -3,9 +3,6 @@ package com.rthtech.bledemo;
 import java.security.MessageDigest;
 
 public class Util {
-    //
-    // this file is just for debug
-    //
     private static String sExternalLogFilePath = "";
     public final static String DATA_DEVICE_ADDR = "data_device_addr";
     public final static String DATA_RESULT = "data_result";
@@ -19,7 +16,6 @@ public class Util {
     public final static String DATA_BYTES1_LABEL = "data_bytes1_label";
     public final static String DATA_BYTES1 = "data_bytes1";
     public final static String DATA_CODE = "data_code";
-
     public static String hexstr(byte value) {
         return String.format("%02X", value);
     }
