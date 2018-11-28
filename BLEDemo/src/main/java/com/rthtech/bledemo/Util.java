@@ -8,7 +8,7 @@ public class Util {
 	//
 	// this file is just for debug
 	//
-	private static String sExternalLogFilePath = null;
+	private static String sExternalLogFilePath ="";
 	public final static String DATA_DEVICE_ADDR = "data_device_addr";
 	public final static String DATA_RESULT = "data_result";
 	public final static String DATA_TITLE = "data_title";
@@ -41,7 +41,7 @@ public class Util {
         }
         return stringBuilder.toString().trim();
     }	
-	public static byte ch2hex(char ch){
+	private static byte ch2hex(char ch){
 		if (ch >= '0' && ch <= '9'){
 			return (byte)(ch - '0');
 		}		
@@ -66,7 +66,7 @@ public class Util {
 		return (byte)((ch2hex(ch0) << 4) | ch2hex(ch1));
 	}
 	public static byte[] hex2bytes(String str){
-		byte[] ret = null;		
+		byte[] ret;
 		int index, count;
 		str = str.replaceAll(" ", "").replace("\r", "").replaceAll("\n", "");
 		if (str.length() % 2 == 1){
@@ -75,7 +75,7 @@ public class Util {
 		count = str.length();
 		ret = new byte[count/2];
 		for (index=0; index < count; index+=2){
-			ret[index/2] = (byte) ((byte)(ch2hex(str.charAt(index)) << 4) | (byte)ch2hex(str.charAt(index + 1)));
+			ret[index/2] = (byte) ((byte)(ch2hex(str.charAt(index)) << 4) | ch2hex(str.charAt(index + 1)));
 		}
 		return ret;
 	}	
@@ -96,32 +96,6 @@ public class Util {
 	private static byte toByte(char c) {
 		byte b = (byte) "0123456789ABCDEF".indexOf(c);
 		return b;
-	}
-
-	public static void log(String str){
-		java.text.SimpleDateFormat fmt;
-		fmt = new java.text.SimpleDateFormat("MM-dd HH:mm:ss", java.util.Locale.CHINA);
-		FileOutputStream os = null;
-		if (null != sExternalLogFilePath){
-			try {
-				os = new FileOutputStream(sExternalLogFilePath, true);
-				os.write(fmt.format(new java.util.Date()).getBytes());
-				os.write((" " + str).getBytes());
-				os.write("\r\n".getBytes());
-				os.close();
-			} catch (FileNotFoundException e) {
-				e.printStackTrace();
-			} catch (IOException e) {
-				e.printStackTrace();
-				if (null != os){
-					try {
-						os.close();
-					} catch (IOException e1) {
-						e1.printStackTrace();
-					}
-				}
-			}
-		}
 	}
 
 	public static String AddSpace(String msg) {

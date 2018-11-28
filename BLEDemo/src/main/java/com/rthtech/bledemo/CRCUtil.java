@@ -3,7 +3,7 @@ package com.rthtech.bledemo;
 public class CRCUtil {
 	// crc16 -1021��У�飬
 	// CRC16-CCITT x16+x12+x5+1 1021 ISO HDLC, ITU X.25, V.34/V.41/V.42, PPP-FCS
-	public static int[] Crc16Calc(byte[] data_arr, int data_len) {
+	private static int[] Crc16Calc(byte[] data_arr, int data_len) {
 		int crc16 = 0;
 		int i;
 		for (i = 0; i < (data_len); i++) {

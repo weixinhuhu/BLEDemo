@@ -1,12 +1,12 @@
 -- Merging decision tree log ---
 manifest
-ADDED from /Users/weixin/AndroidStudioProjects/BLEDemo/BLEDemo/src/main/AndroidManifest.xml:2:1-47:12
-INJECTED from /Users/weixin/AndroidStudioProjects/BLEDemo/BLEDemo/src/main/AndroidManifest.xml:2:1-47:12
-INJECTED from /Users/weixin/AndroidStudioProjects/BLEDemo/BLEDemo/src/main/AndroidManifest.xml:2:1-47:12
-INJECTED from /Users/weixin/AndroidStudioProjects/BLEDemo/BLEDemo/src/main/AndroidManifest.xml:2:1-47:12
-INJECTED from /Users/weixin/AndroidStudioProjects/BLEDemo/BLEDemo/src/main/AndroidManifest.xml:2:1-47:12
-INJECTED from /Users/weixin/AndroidStudioProjects/BLEDemo/BLEDemo/src/main/AndroidManifest.xml:2:1-47:12
-INJECTED from /Users/weixin/AndroidStudioProjects/BLEDemo/BLEDemo/src/main/AndroidManifest.xml:2:1-47:12
+ADDED from /Users/weixin/AndroidStudioProjects/BLEDemo/BLEDemo/src/main/AndroidManifest.xml:2:1-38:12
+INJECTED from /Users/weixin/AndroidStudioProjects/BLEDemo/BLEDemo/src/main/AndroidManifest.xml:2:1-38:12
+INJECTED from /Users/weixin/AndroidStudioProjects/BLEDemo/BLEDemo/src/main/AndroidManifest.xml:2:1-38:12
+INJECTED from /Users/weixin/AndroidStudioProjects/BLEDemo/BLEDemo/src/main/AndroidManifest.xml:2:1-38:12
+INJECTED from /Users/weixin/AndroidStudioProjects/BLEDemo/BLEDemo/src/main/AndroidManifest.xml:2:1-38:12
+INJECTED from /Users/weixin/AndroidStudioProjects/BLEDemo/BLEDemo/src/main/AndroidManifest.xml:2:1-38:12
+INJECTED from /Users/weixin/AndroidStudioProjects/BLEDemo/BLEDemo/src/main/AndroidManifest.xml:2:1-38:12
 	package
 		ADDED from /Users/weixin/AndroidStudioProjects/BLEDemo/BLEDemo/src/main/AndroidManifest.xml:3:5-34
 		INJECTED from /Users/weixin/AndroidStudioProjects/BLEDemo/BLEDemo/src/main/AndroidManifest.xml
@@ -47,57 +47,51 @@ uses-permission#android.permission.INTERNET
 ADDED from /Users/weixin/AndroidStudioProjects/BLEDemo/BLEDemo/src/main/AndroidManifest.xml:13:5-67
 	android:name
 		ADDED from /Users/weixin/AndroidStudioProjects/BLEDemo/BLEDemo/src/main/AndroidManifest.xml:13:22-64
+uses-permission#android.permission.WRITE_EXTERNAL_STOARGE
+ADDED from /Users/weixin/AndroidStudioProjects/BLEDemo/BLEDemo/src/main/AndroidManifest.xml:14:5-81
+	android:name
+		ADDED from /Users/weixin/AndroidStudioProjects/BLEDemo/BLEDemo/src/main/AndroidManifest.xml:14:22-78
+uses-permission#android.permission.READ_LOGS
+ADDED from /Users/weixin/AndroidStudioProjects/BLEDemo/BLEDemo/src/main/AndroidManifest.xml:15:5-68
+	android:name
+		ADDED from /Users/weixin/AndroidStudioProjects/BLEDemo/BLEDemo/src/main/AndroidManifest.xml:15:22-65
+uses-permission#android.permission.ACCESS_COARSE_LOCATION
+ADDED from /Users/weixin/AndroidStudioProjects/BLEDemo/BLEDemo/src/main/AndroidManifest.xml:16:5-81
+	android:name
+		ADDED from /Users/weixin/AndroidStudioProjects/BLEDemo/BLEDemo/src/main/AndroidManifest.xml:16:22-78
+uses-permission#android.permission.ACCESS_FINE_LOCATION
+ADDED from /Users/weixin/AndroidStudioProjects/BLEDemo/BLEDemo/src/main/AndroidManifest.xml:17:5-79
+	android:name
+		ADDED from /Users/weixin/AndroidStudioProjects/BLEDemo/BLEDemo/src/main/AndroidManifest.xml:17:22-76
 uses-feature#android.hardware.bluetooth_le
-ADDED from /Users/weixin/AndroidStudioProjects/BLEDemo/BLEDemo/src/main/AndroidManifest.xml:15:5-17:35
+ADDED from /Users/weixin/AndroidStudioProjects/BLEDemo/BLEDemo/src/main/AndroidManifest.xml:21:5-23:35
 	android:required
-		ADDED from /Users/weixin/AndroidStudioProjects/BLEDemo/BLEDemo/src/main/AndroidManifest.xml:17:9-32
+		ADDED from /Users/weixin/AndroidStudioProjects/BLEDemo/BLEDemo/src/main/AndroidManifest.xml:23:9-32
 	android:name
-		ADDED from /Users/weixin/AndroidStudioProjects/BLEDemo/BLEDemo/src/main/AndroidManifest.xml:16:9-53
-uses-permission#android.permission.WRITE_EXTERNAL_STORAGE
-ADDED from /Users/weixin/AndroidStudioProjects/BLEDemo/BLEDemo/src/main/AndroidManifest.xml:19:5-81
-	android:name
-		ADDED from /Users/weixin/AndroidStudioProjects/BLEDemo/BLEDemo/src/main/AndroidManifest.xml:19:22-78
+		ADDED from /Users/weixin/AndroidStudioProjects/BLEDemo/BLEDemo/src/main/AndroidManifest.xml:22:9-53
 application
-ADDED from /Users/weixin/AndroidStudioProjects/BLEDemo/BLEDemo/src/main/AndroidManifest.xml:20:5-45:19
+ADDED from /Users/weixin/AndroidStudioProjects/BLEDemo/BLEDemo/src/main/AndroidManifest.xml:24:5-37:19
 	android:label
-		ADDED from /Users/weixin/AndroidStudioProjects/BLEDemo/BLEDemo/src/main/AndroidManifest.xml:22:9-41
+		ADDED from /Users/weixin/AndroidStudioProjects/BLEDemo/BLEDemo/src/main/AndroidManifest.xml:26:9-41
 	android:allowBackup
-		ADDED from /Users/weixin/AndroidStudioProjects/BLEDemo/BLEDemo/src/main/AndroidManifest.xml:21:9-35
+		ADDED from /Users/weixin/AndroidStudioProjects/BLEDemo/BLEDemo/src/main/AndroidManifest.xml:25:9-35
 	android:theme
-		ADDED from /Users/weixin/AndroidStudioProjects/BLEDemo/BLEDemo/src/main/AndroidManifest.xml:23:9-40
-activity#com.rthtech.bledemo.MainActivity
-ADDED from /Users/weixin/AndroidStudioProjects/BLEDemo/BLEDemo/src/main/AndroidManifest.xml:24:9-34:20
+		ADDED from /Users/weixin/AndroidStudioProjects/BLEDemo/BLEDemo/src/main/AndroidManifest.xml:27:9-40
+activity#com.rthtech.bledemo.BleActivity
+ADDED from /Users/weixin/AndroidStudioProjects/BLEDemo/BLEDemo/src/main/AndroidManifest.xml:28:9-36:20
 	android:label
-		ADDED from /Users/weixin/AndroidStudioProjects/BLEDemo/BLEDemo/src/main/AndroidManifest.xml:27:13-45
+		ADDED from /Users/weixin/AndroidStudioProjects/BLEDemo/BLEDemo/src/main/AndroidManifest.xml:31:13-45
 	android:icon
-		ADDED from /Users/weixin/AndroidStudioProjects/BLEDemo/BLEDemo/src/main/AndroidManifest.xml:26:13-49
-	android:theme
-		ADDED from /Users/weixin/AndroidStudioProjects/BLEDemo/BLEDemo/src/main/AndroidManifest.xml:28:13-59
+		ADDED from /Users/weixin/AndroidStudioProjects/BLEDemo/BLEDemo/src/main/AndroidManifest.xml:30:13-49
 	android:name
-		ADDED from /Users/weixin/AndroidStudioProjects/BLEDemo/BLEDemo/src/main/AndroidManifest.xml:25:13-60
+		ADDED from /Users/weixin/AndroidStudioProjects/BLEDemo/BLEDemo/src/main/AndroidManifest.xml:29:13-59
 intent-filter#action:name:android.intent.action.MAIN+category:name:android.intent.category.LAUNCHER
-ADDED from /Users/weixin/AndroidStudioProjects/BLEDemo/BLEDemo/src/main/AndroidManifest.xml:29:13-33:29
+ADDED from /Users/weixin/AndroidStudioProjects/BLEDemo/BLEDemo/src/main/AndroidManifest.xml:32:13-35:29
 action#android.intent.action.MAIN
-ADDED from /Users/weixin/AndroidStudioProjects/BLEDemo/BLEDemo/src/main/AndroidManifest.xml:30:17-69
+ADDED from /Users/weixin/AndroidStudioProjects/BLEDemo/BLEDemo/src/main/AndroidManifest.xml:33:17-69
 	android:name
-		ADDED from /Users/weixin/AndroidStudioProjects/BLEDemo/BLEDemo/src/main/AndroidManifest.xml:30:25-66
+		ADDED from /Users/weixin/AndroidStudioProjects/BLEDemo/BLEDemo/src/main/AndroidManifest.xml:33:25-66
 category#android.intent.category.LAUNCHER
-ADDED from /Users/weixin/AndroidStudioProjects/BLEDemo/BLEDemo/src/main/AndroidManifest.xml:32:17-77
+ADDED from /Users/weixin/AndroidStudioProjects/BLEDemo/BLEDemo/src/main/AndroidManifest.xml:34:17-77
 	android:name
-		ADDED from /Users/weixin/AndroidStudioProjects/BLEDemo/BLEDemo/src/main/AndroidManifest.xml:32:27-74
-activity#com.rthtech.bledemo.ZhActivity
-ADDED from /Users/weixin/AndroidStudioProjects/BLEDemo/BLEDemo/src/main/AndroidManifest.xml:35:9-39:20
-	android:label
-		ADDED from /Users/weixin/AndroidStudioProjects/BLEDemo/BLEDemo/src/main/AndroidManifest.xml:38:13-45
-	android:icon
-		ADDED from /Users/weixin/AndroidStudioProjects/BLEDemo/BLEDemo/src/main/AndroidManifest.xml:37:13-43
-	android:name
-		ADDED from /Users/weixin/AndroidStudioProjects/BLEDemo/BLEDemo/src/main/AndroidManifest.xml:36:13-58
-activity#com.rthtech.bledemo.SlActivity
-ADDED from /Users/weixin/AndroidStudioProjects/BLEDemo/BLEDemo/src/main/AndroidManifest.xml:40:9-44:20
-	android:label
-		ADDED from /Users/weixin/AndroidStudioProjects/BLEDemo/BLEDemo/src/main/AndroidManifest.xml:43:13-45
-	android:icon
-		ADDED from /Users/weixin/AndroidStudioProjects/BLEDemo/BLEDemo/src/main/AndroidManifest.xml:42:13-43
-	android:name
-		ADDED from /Users/weixin/AndroidStudioProjects/BLEDemo/BLEDemo/src/main/AndroidManifest.xml:41:13-58
+		ADDED from /Users/weixin/AndroidStudioProjects/BLEDemo/BLEDemo/src/main/AndroidManifest.xml:34:27-74

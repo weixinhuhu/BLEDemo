@@ -1,7 +1,7 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="fill_parent"
     android:layout_height="fill_parent"
-    android:orientation="vertical" >
+    android:orientation="vertical">
 
     <ListView
         android:id="@+id/listViewLog"
@@ -11,8 +11,7 @@
         android:layout_marginRight="2dp"
         android:layout_marginTop="2dp"
         android:background="@drawable/bg_edittext"
-        android:divider="@null" >
-    </ListView>
+        android:divider="@null"></ListView>
 
     <ListView
         android:id="@+id/listViewAPI"
@@ -23,7 +22,7 @@
         android:layout_marginRight="2dp"
         android:layout_marginTop="2dp"
         android:layout_weight="1"
-        android:background="@drawable/bg_edittext" >
+        android:background="@drawable/bg_edittext">
 
     </ListView>
 
@@ -31,7 +30,7 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:gravity="center_horizontal" >
+        android:gravity="center_horizontal">
 
         <Button
             android:id="@+id/btnScan"

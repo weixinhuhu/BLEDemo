@@ -3,7 +3,7 @@
     <dimen name="activity_horizontal_margin">16dp</dimen>
     <dimen name="activity_vertical_margin">16dp</dimen>
     <string name="action_settings">Settings</string>
-    <string name="app_name">SL800 Demo</string>
+    <string name="app_name">Rt8 Demo</string>
     <string name="bthdisabled">Bluetooth is disabled or Application has no bluetooth_le feature!</string>
     <string name="cancel">Cancel</string>
     <string name="card_id">Card ID</string>

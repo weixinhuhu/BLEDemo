@@ -1,5 +1,5 @@
 #Internal package file, do not edit.
-#Tue Aug 28 16:19:42 CST 2018
+#Fri Nov 23 16:54:04 CST 2018
 0.baseType=DIRECTORY
 0.base=/Users/weixin/AndroidStudioProjects/BLEDemo/BLEDemo/build/intermediates/transforms/dexMerger/debug/0
 0.path=classes.dex
