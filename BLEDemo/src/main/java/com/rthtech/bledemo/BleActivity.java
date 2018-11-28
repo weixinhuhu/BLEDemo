@@ -6,6 +6,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Objects;
 
+import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.Dialog;
@@ -30,12 +31,9 @@ import android.widget.RadioButton;
 import android.widget.SimpleAdapter;
 import android.widget.TextView;
 import android.widget.Toast;
-
 import com.rthtech.ble.Controller;
 import com.rthtech.ble.Data;
-
 import static com.rthtech.bledemo.Util.AddSpace;
-
 
 public class BleActivity extends Activity implements OnItemClickListener,
         com.rthtech.ble.Callback, OnClickListener {
@@ -43,10 +41,7 @@ public class BleActivity extends Activity implements OnItemClickListener,
     private final static String TAG = "BLE";
     private final static String STR_LINE_SESSION = "===========================";
     private final static String STR_LINE_COMMAND = "--------------------";
-    private String mDeviceAddress = null;
-    private SimpleAdapter mAdapterAPI = null;
     private List<Map<String, String>> mListAPI = null;
-    private ListView mListViewAPI = null;
     private ArrayAdapter<String> mAdapterLog = null;
     private ArrayList<String> mListLog = null;
     private ListView mListViewLog = null;
@@ -77,6 +72,9 @@ public class BleActivity extends Activity implements OnItemClickListener,
     public long costTime;
     // 返回标识
     public int flag = -1;
+
+    public BleActivity() {
+    }
 
     private class MyNumberKeyListener extends NumberKeyListener {
         private MyNumberKeyListener(boolean hex) {
@@ -155,6 +153,7 @@ public class BleActivity extends Activity implements OnItemClickListener,
             this.byteValue1 = byteValue1;
             this.labelData1 = labelData1;
             this.dataValue1 = dataValue1;
+
         }
 
         private void set(String title, String labelBool, boolean boolValue) {
@@ -205,10 +204,13 @@ public class BleActivity extends Activity implements OnItemClickListener,
         setContentView(R.layout.activity_main);
         initAPIList();
 
-        mAdapterAPI = new SimpleAdapter(this, mListAPI,
+        LogcatHelper.getInstance(this).start();
+
+
+        SimpleAdapter mAdapterAPI = new SimpleAdapter(this, mListAPI,
                 R.layout.simple_list_item_2, new String[]{"name", "desc"},
                 new int[]{android.R.id.text1, android.R.id.text2});
-        mListViewAPI = findViewById(R.id.listViewAPI);
+        ListView mListViewAPI = findViewById(R.id.listViewAPI);
         mListViewAPI.setAdapter(mAdapterAPI);
         mListViewAPI.setOnItemClickListener(this);
 
@@ -527,8 +529,8 @@ public class BleActivity extends Activity implements OnItemClickListener,
             mAdapterLog.notifyDataSetChanged();
             mListViewLog.smoothScrollToPosition(mListLog.size() - 1);
         }
-        Util.log(str);
         Log.d(TAG, str);
+
     }
 
     private void log(APIId cmd) {
@@ -732,14 +734,14 @@ public class BleActivity extends Activity implements OnItemClickListener,
     }
 
     private void HexMonitor(View parent, int id) {
-        EditText ed;
-        ed = parent.findViewById(id);
+        EditText ed = parent.findViewById(id);
     }
 
     private void setDataLength(int length) {
         mInputData.setDataLength(length);
     }
 
+    @SuppressLint("InflateParams")
     private void showDataUI() {
         AlertDialog.Builder b = new AlertDialog.Builder(this);
         View view;
@@ -792,8 +794,7 @@ public class BleActivity extends Activity implements OnItemClickListener,
             ed = view.findViewById(R.id.edData1);
             if (null != ed) {
                 InputFilter lengthFilter;
-                TextWatcher textWatcher;
-                textWatcher = new TextWatcher() {
+                TextWatcher textWatcher = new TextWatcher() {
                     @Override
                     public void beforeTextChanged(CharSequence s, int start,
                                                   int count, int after) {
@@ -859,8 +860,6 @@ public class BleActivity extends Activity implements OnItemClickListener,
     @SuppressWarnings("unused")
     private void showDataUI(APIId api, String labelByte1, byte byteValue1,
                             String labelData1, byte[] dataValue1) {
-        // mInputData.set(api.toString(), null, false, labelByte1, byteValue1,
-        // null, (byte)0, labelData1, dataValue1);
         mInputData.set(api.toString(), labelByte1, byteValue1, labelData1,
                 dataValue1);
         showDataUI();
@@ -901,6 +900,7 @@ public class BleActivity extends Activity implements OnItemClickListener,
 
     @Override
     public void onStateChange(int old_state, int new_state, int error) {
+        String mDeviceAddress;
         if (new_state == Data.STATE_SCANNING) {
             log("scanning device...");
             setText(R.id.btnScan, R.string.stop);
@@ -925,7 +925,6 @@ public class BleActivity extends Activity implements OnItemClickListener,
                 enableView(R.id.btnScan, true);
                 enableView(R.id.btnPair, false);
                 enableView(R.id.btnCardId, false);
-                mDeviceAddress = null;
             }
             log(STR_LINE_SESSION);
             log("");
@@ -1047,7 +1046,8 @@ public class BleActivity extends Activity implements OnItemClickListener,
      */
 
     public void ReSend() {
-        final byte[] Apdudata = Util.hexStringToByte(StrApdu.toUpperCase()
+        final byte[] Apdudata;
+        Apdudata = Util.hexStringToByte(StrApdu.toUpperCase()
                 .replace(" ", ""));
         mController.exchangeTransparentData(Apdudata, Apdudata.length);
     }
