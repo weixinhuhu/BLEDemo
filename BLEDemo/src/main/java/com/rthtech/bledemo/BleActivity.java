@@ -31,8 +31,10 @@ import android.widget.RadioButton;
 import android.widget.SimpleAdapter;
 import android.widget.TextView;
 import android.widget.Toast;
+
 import com.rthtech.ble.Controller;
 import com.rthtech.ble.Data;
+
 import static com.rthtech.bledemo.Util.AddSpace;
 
 public class BleActivity extends Activity implements OnItemClickListener,
@@ -225,7 +227,6 @@ public class BleActivity extends Activity implements OnItemClickListener,
         mScanMode = false;
 
         Button btn;
-
         btn = findViewById(R.id.btnScan);
         btn.setOnClickListener(this);
         btn.setText(R.string.scan);
@@ -430,8 +431,8 @@ public class BleActivity extends Activity implements OnItemClickListener,
         P1 = "00";
         P2 = "00";
         LC = "12";
-        DATE = Objects.requireNonNull(Utils.getSha1(key)).substring(0, 32)
-                + CRCUtil.getCrc16(Objects.requireNonNull(Utils.getSha1(key)).substring(0, 32));
+        DATE = Objects.requireNonNull(Util.getSha1(key)).substring(0, 32)
+                + CRCUtil.getCrc16(Objects.requireNonNull(Util.getSha1(key)).substring(0, 32));
         LE = "44";
         StrApdu = CLA + INS + P1 + P2 + LC + DATE + LE;
         log("发送==>>" + AddSpace(StrApdu));
@@ -810,7 +811,7 @@ public class BleActivity extends Activity implements OnItemClickListener,
                         int l;
                         String text;
                         text = s.toString();
-                        if (null == text) l = 0;
+                        if (null != text) l = 0;
                         else l = text.length();
                         if (mInputData.asciiData1) setText(mDialogView, R.id.tvLengthIndicator, ""
                                 + (mInputData.dataLength1 - l));
@@ -1044,7 +1045,6 @@ public class BleActivity extends Activity implements OnItemClickListener,
     /**
      * 重发APDU指令
      */
-
     public void ReSend() {
         final byte[] Apdudata;
         Apdudata = Util.hexStringToByte(StrApdu.toUpperCase()

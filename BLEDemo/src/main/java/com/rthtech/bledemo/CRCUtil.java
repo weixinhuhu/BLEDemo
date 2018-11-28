@@ -19,12 +19,7 @@ public class CRCUtil {
 		return result;
 	}
 	
-	/**
-	 * ��16�����ַ�ת��Ϊbyte[]
-	 * 
-	 * @param str
-	 * @return
-	 */
+
 	public static byte[] toBytes(String str) {
 		if (str == null || str.trim().equals("")) {
 			return new byte[0];
