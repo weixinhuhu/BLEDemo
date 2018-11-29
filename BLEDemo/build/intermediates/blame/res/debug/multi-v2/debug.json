@@ -1,30 +1,6 @@
 {
     "logs": [
         {
-            "outputFile": "/Users/weixin/AndroidStudioProjects/BLEDemo/BLEDemo/build/intermediates/res/merged/debug/values-v14_values-v14.arsc.flat",
-            "map": [
-                {
-                    "source": "/Users/weixin/AndroidStudioProjects/BLEDemo/BLEDemo/src/main/res/values-v14/styles.xml",
-                    "from": {
-                        "startLines": "7",
-                        "startColumns": "4",
-                        "startOffsets": "225",
-                        "endLines": "9",
-                        "endColumns": "12",
-                        "endOffsets": "373"
-                    },
-                    "to": {
-                        "startLines": "2",
-                        "startColumns": "4",
-                        "startOffsets": "55",
-                        "endLines": "4",
-                        "endColumns": "12",
-                        "endOffsets": "201"
-                    }
-                }
-            ]
-        },
-        {
             "outputFile": "/Users/weixin/AndroidStudioProjects/BLEDemo/BLEDemo/build/intermediates/res/merged/debug/values-w820dp-v13_values-w820dp-v13.arsc.flat",
             "map": [
                 {
@@ -124,6 +100,30 @@
                         "endLines": "23,26",
                         "endColumns": "12,12",
                         "endOffsets": "1081,1241"
+                    }
+                }
+            ]
+        },
+        {
+            "outputFile": "/Users/weixin/AndroidStudioProjects/BLEDemo/BLEDemo/build/intermediates/res/merged/debug/values-v14_values-v14.arsc.flat",
+            "map": [
+                {
+                    "source": "/Users/weixin/AndroidStudioProjects/BLEDemo/BLEDemo/src/main/res/values-v14/styles.xml",
+                    "from": {
+                        "startLines": "7",
+                        "startColumns": "4",
+                        "startOffsets": "225",
+                        "endLines": "9",
+                        "endColumns": "12",
+                        "endOffsets": "373"
+                    },
+                    "to": {
+                        "startLines": "2",
+                        "startColumns": "4",
+                        "startOffsets": "55",
+                        "endLines": "4",
+                        "endColumns": "12",
+                        "endOffsets": "201"
                     }
                 }
             ]
