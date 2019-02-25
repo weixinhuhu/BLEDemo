@@ -19,6 +19,6 @@ android {
 }
 
 dependencies {
-    compile files('libs/blelib.jar')
-    compile files('libs/ksoap2-android-assembly-3.3.0-jar-with-dependencies.jar')
+    api  files('libs/blelib.jar')
+    api  files('libs/ksoap2-android-assembly-3.3.0-jar-with-dependencies.jar')
 }

@@ -1,7 +1,7 @@
 package com.rthtech.bledemo;
 
 public class CRCUtil {
-	// crc16 -1021��У�飬
+	// crc16 -1021
 	// CRC16-CCITT x16+x12+x5+1 1021 ISO HDLC, ITU X.25, V.34/V.41/V.42, PPP-FCS
 	private static int[] Crc16Calc(byte[] data_arr, int data_len) {
 		int crc16 = 0;
@@ -42,6 +42,6 @@ public class CRCUtil {
 	}
 
 	public static void main(String[] args) {
-		System.out.println(getCrc16("1234"));
+		System.out.println(getCrc16("11111111"));
 	}
 }

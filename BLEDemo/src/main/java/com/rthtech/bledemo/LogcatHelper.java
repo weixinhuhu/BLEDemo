@@ -24,7 +24,8 @@ public class LogcatHelper {
      * 初始化目录
      *
      * */
-    public void init(Context context) {
+
+    private void init(Context context) {
         if (Environment.getExternalStorageState().equals(
                 Environment.MEDIA_MOUNTED)) {// 优先保存到SD卡中
             PATH_LOGCAT = Environment.getExternalStorageDirectory()
@@ -36,7 +37,10 @@ public class LogcatHelper {
         try{
             File file = new File(PATH_LOGCAT);
             if (!file.exists()) {
-                file.mkdirs();
+             boolean wasSuccessful=file.mkdirs();
+             if (!wasSuccessful){
+                Log.d("BLE","创建日志文件失败");
+             }
             }
         }
         catch(Exception e){
@@ -44,7 +48,7 @@ public class LogcatHelper {
         }
     }
 
-    public static LogcatHelper getInstance(Context context) {
+    public   static LogcatHelper getInstance(Context context) {
         if (INSTANCE == null) {
             INSTANCE = new LogcatHelper(context);
         }
@@ -78,22 +82,15 @@ public class LogcatHelper {
         private String mPID;
         private FileOutputStream out = null;
 
-        public LogDumper(String pid, String dir) {
+        private LogDumper(String pid, String dir) {
             mPID = pid;
             try {
                 out = new FileOutputStream(new File(dir,  getFileName() + ".log"));
             } catch (FileNotFoundException e) {
                 e.printStackTrace();
             }
-
-            /**
-             *
-             * 日志等级：*:v , *:d , *:w , *:e , *:f , *:s
-             *
-             * 显示当前mPID程序的 E和W等级的日志.
-             *
-             * */
-
+             // 日志等级：*:v , *:d , *:w , *:e , *:f , *:s
+             //显示当前mPID程序的 E和W等级的日志.
             // cmds = "logcat *:e *:w | grep \"(" + mPID + ")\"";
             // cmds = "logcat  | grep \"(" + mPID + ")\"";//打印所有日志信息
             cmds = "logcat -s BLE";//打印标签过滤信息
@@ -110,7 +107,7 @@ public class LogcatHelper {
                 logcatProc = Runtime.getRuntime().exec(cmds);
                 mReader = new BufferedReader(new InputStreamReader(
                         logcatProc.getInputStream()), 1024);
-                String line = null;
+                String line ;
                 while (mRunning && (line = mReader.readLine()) != null) {
                     if (!mRunning) {
                         break;
@@ -151,7 +148,7 @@ public class LogcatHelper {
 
         }
     }
-    public  String getFileName() {
+    private   String getFileName() {
         SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
         String date = format.format(new Date(System.currentTimeMillis()));
         return date;

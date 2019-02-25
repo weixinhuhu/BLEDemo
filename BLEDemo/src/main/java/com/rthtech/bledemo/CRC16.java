@@ -23,7 +23,6 @@ public class CRC16 {
 		return crc;
 	}
 
-
 	public static byte[] toBytes(String str) {
 		if (str == null || str.trim().equals("")) {
 			return new byte[0];
@@ -37,14 +36,16 @@ public class CRC16 {
 		return bytes;
 	}
 
-	private static String getCrc16(String Key) {
+
+			private static String getCrc16(String Key) {
 		byte[] test = CRC16.toBytes(Key);
 		return Integer.toHexString(CRC16.crc_16_CCITT_False(test, 0))
 				.toUpperCase();
 	}
 
 	public static void main(String[] args) {
-		System.out.println(getCrc16("123456780000"));
+		System.out.println(getCrc16("11111111"));
+
 	}
 
 }

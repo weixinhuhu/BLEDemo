@@ -43,11 +43,11 @@ public class BleActivity extends Activity implements OnItemClickListener,
     private final static String TAG = "BLE";
     private final static String STR_LINE_SESSION = "===========================";
     private final static String STR_LINE_COMMAND = "--------------------";
-    private List<Map<String, String>> mListAPI = null;
-    private ArrayAdapter<String> mAdapterLog = null;
-    private ArrayList<String> mListLog = null;
-    private ListView mListViewLog = null;
-    private View mDialogView = null;
+    private List<Map<String, String>> mListAPI;
+    private ArrayAdapter<String> mAdapterLog;
+    private ArrayList<String> mListLog;
+    private ListView mListViewLog;
+    private View mDialogView;
     private List<String> mListDeviceName = null;
     private List<String> mListDeviceAddress = null;
     private boolean mScanMode = false;
@@ -76,6 +76,7 @@ public class BleActivity extends Activity implements OnItemClickListener,
     public int flag = -1;
 
     public BleActivity() {
+        mDialogView = null;
     }
 
     private class MyNumberKeyListener extends NumberKeyListener {
@@ -105,13 +106,13 @@ public class BleActivity extends Activity implements OnItemClickListener,
         private byte byteValue1;
         private byte byteValue2;
         private byte[] dataValue1;
-        public int dataLength1;
+        private int dataLength1;
         private String title;
         private String labelBool;
         private String labelByte1;
         private String labelByte2;
         private String labelData1;
-        public boolean asciiData1;
+        private boolean asciiData1;
 
         private InputData() {
             reset();
@@ -386,7 +387,7 @@ public class BleActivity extends Activity implements OnItemClickListener,
             // 生成masterkey
             flag = 1;
             try {
-                CreatSeed("11223344556677881122334455667788");
+                CreatSeed("123456");
             } catch (Exception e) {
                 log(e.toString());
             }
@@ -411,8 +412,9 @@ public class BleActivity extends Activity implements OnItemClickListener,
             flag = 5;
             getSignature(
                     "3C",
-                    "00000002",
+                   "00000002",
                     "112233445566778811223344556677881122334455667788112233445566778811223344556677881122334455667788112233445566778811223344556677881122334455667788112233445566778811223344556677881122334455667788");
+
         } else if (obj == APIId.ExchangeTransparentData6.ordinal()) {
             // 恢復seed
             flag = 6;
@@ -811,7 +813,7 @@ public class BleActivity extends Activity implements OnItemClickListener,
                         int l;
                         String text;
                         text = s.toString();
-                        if (null != text) l = 0;
+                        if (null == text) l = 0;
                         else l = text.length();
                         if (mInputData.asciiData1) setText(mDialogView, R.id.tvLengthIndicator, ""
                                 + (mInputData.dataLength1 - l));
@@ -944,8 +946,7 @@ public class BleActivity extends Activity implements OnItemClickListener,
         byte[] tmp = new byte[dataLength];
         System.arraycopy(data, 0, tmp, 0, dataLength);
 
-        if (null != data) log("recv: " + Util.hexstr(tmp, true));
-        else log("info: no data!");
+        log(null != data ? "recv: " + Util.hexstr(tmp, true) : "info: no data!");
     }
 
     @Override
